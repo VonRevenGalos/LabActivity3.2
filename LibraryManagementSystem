@@ -1,0 +1,114 @@
+package _1_Exercises;
+
+import java.util.Scanner;
+
+public class LibraryManagementSystem {
+    private ObjectArray<Book> books = new ObjectArray<>();
+
+    public void addBook(String title, String author, String isbn) {
+        Book book = new Book(title, author, isbn);
+        books.add(book);
+        System.out.println("Book added: " + book);
+    }
+
+    public void removeBook(int index) {
+        try {
+            Book removedBook = books.remove(index);
+            System.out.println("Removed book: " + removedBook);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index: " + index);
+        }
+    }
+
+    public void searchBook(int index) {
+        try {
+            Book book = books.get(index);
+            System.out.println("Found book: " + book);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index: " + index);
+        }
+    }
+
+    public void displayTotalBooks() {
+        System.out.println("Total number of books: " + books.size());
+    }
+
+    public void printBooks() {
+        System.out.println("List of Books:");
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println((i + 1) + ". " + books.get(i));
+        }
+    }
+
+    public void sortBooks() {
+        int n = books.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                Book book1 = books.get(j);
+                Book book2 = books.get(j + 1);
+                if (book1.getTitle().compareTo(book2.getTitle()) > 0) {
+                    
+                    books.insert(j, book2);
+                    books.insert(j + 1, book1);
+                }
+            }
+        }
+        System.out.println("Books sorted alphabetically!");
+        printBooks();
+    }
+
+    public static void main(String[] args) {
+        LibraryManagementSystem library = new LibraryManagementSystem();
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("Library Management System:");
+            System.out.println("1. Add Book");
+            System.out.println("2. Remove Book");
+            System.out.println("3. Search Book");
+            System.out.println("4. Display Total Books");
+            System.out.println("5. Sort Books");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter author: ");
+                    String author = scanner.nextLine();
+                    System.out.print("Enter ISBN: ");
+                    String isbn = scanner.nextLine();
+                    library.addBook(title, author, isbn);
+                    break;
+                case 2:
+                    System.out.print("Enter index of the book to remove: ");
+                    int removeIndex = scanner.nextInt();
+                    library.removeBook(removeIndex);
+                    break;
+                case 3:
+                    System.out.print("Enter index of the book to search: ");
+                    int searchIndex = scanner.nextInt();
+                    library.searchBook(searchIndex);
+                    break;
+                case 4:
+                    library.displayTotalBooks();
+                    break;
+                case 5:
+                    library.sortBooks();
+                    break;
+                case 6:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}
