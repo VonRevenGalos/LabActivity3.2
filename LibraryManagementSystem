@@ -1,1 +1,41 @@
+package _1_Exercises;
 
+import java.util.Scanner;
+
+public class LibraryManagementSystem {
+    private ObjectArray<Book> books = new ObjectArray<>();
+
+    public void addBook(String title, String author, String isbn) {
+        Book book = new Book(title, author, isbn);
+        books.add(book);
+        System.out.println("Book added: " + book);
+    }
+
+    public void removeBook(int index) {
+        try {
+            Book removedBook = books.remove(index);
+            System.out.println("Removed book: " + removedBook);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index: " + index);
+        }
+    }
+
+    public void searchBook(int index) {
+        try {
+            Book book = books.get(index);
+            System.out.println("Found book: " + book);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index: " + index);
+        }
+    }
+
+    public void displayTotalBooks() {
+        System.out.println("Total number of books: " + books.size());
+    }
+
+    public void printBooks() {
+        System.out.println("List of Books:");
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println((i + 1) + ". " + books.get(i));
+        }
+    }
