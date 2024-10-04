@@ -28,3 +28,34 @@ public class ObjectArray<T> {
         size++;
     }
 
+public T remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        T removedElement = array[index];
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        size--;
+        return removedElement;
+    }
+    
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        return array[index];
+    }
+
+    public int size() {
+        return size;
+    }
+ 
+    private void ensureCapacity() {
+        if (size >= array.length) {
+            T[] newArray = (T[]) new Object[array.length * 2];
+            System.arraycopy(array, 0, newArray, 0, array.length);
+            array = newArray;
+        }
+    }
+}
